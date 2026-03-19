@@ -196,6 +196,8 @@ public partial class RmqMessageProducer : RmqMessageGateway, IAmAMessageProducer
 
     public sealed override void Dispose()
     {
+        Channel?.BasicAcksAsync -= OnPublishSucceeded;
+        Channel?.BasicNacksAsync -= OnPublishFailed;
         GC.SuppressFinalize(this);
     }
 
